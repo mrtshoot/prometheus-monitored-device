@@ -52,6 +52,11 @@ Up and Running your System
 docker-compose up -d
 ```
 
+#### Notice
+
+Prometheus is Time Sensitive.check and Sync your Date and Time with your Current Location and Browser otherwise you may see exception on prometheus queries
+
+
 ## Authors
 
 * **Hossein Ghorbani(MrTshoot)** - *Follow me* - [Hossein Ghorbani](https://github.com/mrtshoot)
