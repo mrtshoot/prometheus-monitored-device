@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-first of all go to prometheus-docker directory then create directory with command 
+First of all Install Following Requirements
 
 ### Prerequisites
 What things you need to install
