@@ -1,4 +1,4 @@
-docker-compose
+docker-compose.yml
 grafana
 data
 prometheus.yml
