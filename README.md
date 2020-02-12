@@ -54,7 +54,8 @@ docker-compose up -d
 
 #### Notice
 
-Prometheus is Time Sensitive.check and Sync your Date and Time with your Current Location and Browser otherwise you may see exception on prometheus queries on Linux you can follow this Structure
+Prometheus is Time Sensitive.check and Sync your Date and Time with your Current Location and Browser otherwise you may see exception on prometheus queries.
+on Linux you can follow this Structure
 
 ```
 date -R
@@ -64,6 +65,7 @@ after underestand structure you can set time with following example command
 
 ```
 date -s "12 Feb 2020 20:52:19 +0330"
+```
 
 ## Authors
 
