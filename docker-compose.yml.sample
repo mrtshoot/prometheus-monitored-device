@@ -25,6 +25,15 @@ services:
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
 
+  proxy:
+    image: nginx
+    container_name: proxy
+    restart: always
+    network_mode: host
+    volumes:
+      - ./proxy/config/conf.d:/etc/nginx/conf.d
+      - ./proxy/logs:/var/log/nginx
+
   grafana:
     image: grafana/grafana
     container_name: grafana
