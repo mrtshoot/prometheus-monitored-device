@@ -1,13 +1,14 @@
 version: "3"
 services:
+
   prometheus:
     image: prom/prometheus
     container_name: prometheus-master
     restart: always
     network_mode: host
     volumes:
-      - /opt/monitoring/dockerize/prometheus.yml:/etc/prometheus/prometheus.yml
-      - /opt/monitoring/dockerize/data/:/promehteus/wal
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./data/:/promehteus/wal
 
   node_exporter:
     image: prom/node-exporter
@@ -23,7 +24,6 @@ services:
       - '--path.rootfs=/rootfs'
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
-#      - '--web.listen-address="127.0.0.1:9090"'
 
   grafana:
     image: grafana/grafana
