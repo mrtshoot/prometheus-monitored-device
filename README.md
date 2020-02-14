@@ -33,6 +33,33 @@ Create Prometheus Data Directory
 cd prometheus-docker;mkdir data
 ```
 
+Create Nginx Reversed Proxy Directories for Configurations and Logs on prometheus-docker directory
+
+```
+mkdir -p proxy/config/conf.d;mkdir -p proxy/logs
+```
+
+Create Your Reverse Proxy Configuration File
+
+```
+tocu poxy/conf.d/local.conf
+```
+
+Add your sample Configuration Proxy to Upstream Web Server on local.conf
+if you need sample nginx page go to /use/share/nginx/share and place on there.
+
+```
+server {
+  listen 80;
+  root /usr/share/nginx/html;
+  index index.html index.htm;
+
+  location / {
+    proxy_pass http://localhost:3000/;
+  }
+}
+```
+
 Copy sample Prometheus Configuration file and Add your jobs and node-exporter informations on it.
 
 ```
