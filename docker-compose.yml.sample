@@ -2,7 +2,7 @@ version: "3"
 services:
 
   prometheus:
-    image: localhub.etod.me/prom/prometheus
+    image: prom/prometheus
     container_name: prometheus-master
     restart: always
     networks:
@@ -15,7 +15,7 @@ services:
       - /etc/hosts:/etc/hosts:ro
 
   node_exporter:
-    image: localhub.etod.me/prom/node-exporter
+    image: prom/node-exporter
     container_name: nodeexporter
     restart: always
     networks:
@@ -33,7 +33,7 @@ services:
       - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
 
   prom_speedtest:
-    image: localhub.etod.me/jraviles/prometheus_speedtest
+    image: jraviles/prometheus_speedtest
     container_name: prom_speedtest  
     restart: always
     networks:
@@ -42,7 +42,7 @@ services:
       - '9516'
   
   proxy:
-    image: localhub.etod.me/nginx
+    image: nginx
     container_name: proxy
     restart: always
     depends_on:
@@ -59,7 +59,7 @@ services:
       - ./proxy/logs:/var/log/nginx
 
   grafana:
-    image: localhub.etod.me/grafana/grafana
+    image: grafana/grafana
     container_name: grafana
     restart: always
     networks:
