@@ -1,5 +1,4 @@
 docker-compose.yml
-grafana
 data
 proxy
 prometheus.yml
