@@ -42,7 +42,7 @@ mkdir -p proxy/config/conf.d;mkdir -p proxy/logs
 Create Your Reverse Proxy Configuration File
 
 ```
-touch poxy/config/conf.d/local.conf
+touch proxy/config/conf.d/local.conf
 ```
 
 Add your sample Configuration Proxy to Upstream Web Server on local.conf
