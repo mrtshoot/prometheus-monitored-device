@@ -46,7 +46,6 @@ touch proxy/config/conf.d/local.conf
 ```
 
 Add your sample Configuration Proxy to Upstream Web Server on local.conf
-if you need sample nginx page go to /use/share/nginx/share and place on there.
 
 ```
 server {
@@ -55,9 +54,69 @@ server {
   index index.html index.htm;
 
   location / {
-    proxy_pass http://localhost:3000/;
+    include /etc/nginx/conf.d/prometheus_const.conf;
+    proxy_pass http://grafana:3000/;
+  }  
+
+  location /node_metrics {
+    include /etc/nginx/conf.d/prometheus_const.conf;
+    proxy_pass http://node_exporter:9100/metrics;
+  }
+
+  location /alerts {
+    include /etc/nginx/conf.d/prometheus_const.conf;
+    proxy_pass http://prometheus:9090/alerts;
+  }
+
+  location /status {
+    include /etc/nginx/conf.d/prometheus_const.conf;
+    proxy_pass http://prometheus:9090/status;
+  }
+
+  location /flags {
+    include /etc/nginx/conf.d/prometheus_const.conf;
+    proxy_pass http://prometheus:9090/flags;
+  }
+
+  location /config {
+    include /etc/nginx/conf.d/prometheus_const.conf;
+    proxy_pass http://prometheus:9090/config;
+  }
+
+  location /rules {
+    include /etc/nginx/conf.d/prometheus_const.conf;
+    proxy_pass http://prometheus:9090/rules;
+  }
+
+  location /service-discovery {
+    include /etc/nginx/conf.d/prometheus_const.conf;
+    proxy_pass http://prometheus:9090/service-discovery;
+  }
+
+  location /targets {
+    include /etc/nginx/conf.d/prometheus_const.conf;
+    proxy_pass http://prometheus:9090/targets;
+  }
+
+  location /probe {
+    include /etc/nginx/conf.d/prometheus_const.conf;
+    proxy_pass http://prom_speedtest:9516/probe;
   }
 }
+```
+
+Create Proxy Consistent File
+```
+touch proxy/config/conf.d/prometheus_const.conf
+```
+
+Add your Sample Proxy Configuration for include it on local.conf file.
+```
+allow [IP/SUBNET];
+deny  [IP/SUBNET];
+proxy_set_header Host $host;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Real-IP $remote_addr;
 ```
 
 Copy sample Prometheus Configuration file and Add your jobs and node-exporter informations on it.
