@@ -1,0 +1,81 @@
+version: "3"
+services:
+
+  prometheus:
+    image: localhub.etod.me/prom/prometheus
+    container_name: prometheus-master
+    restart: always
+    networks:
+      - prom-proxy
+    ports:
+      - '9090'
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./data/:/promehteus/wal
+      - /etc/hosts:/etc/hosts:ro
+
+  node_exporter:
+    image: localhub.etod.me/prom/node-exporter
+    container_name: nodeexporter
+    restart: always
+    networks:
+      - prom-proxy
+    ports:
+      - '9100'
+    volumes:
+      - /proc/:/host/proc:ro
+      - /sys/:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+
+  prom_speedtest:
+    image: localhub.etod.me/jraviles/prometheus_speedtest
+    container_name: prom_speedtest  
+    restart: always
+    networks:
+      - prom-proxy
+    ports:
+      - '9516'
+  
+  proxy:
+    image: localhub.etod.me/nginx
+    container_name: proxy
+    restart: always
+    depends_on:
+      - prometheus
+      - node_exporter
+      - grafana
+      - prom_speedtest
+    networks:
+      - prom-proxy
+    ports:
+      - '80:80'
+    volumes:
+      - ./proxy/config/conf.d:/etc/nginx/conf.d
+      - ./proxy/logs:/var/log/nginx
+
+  grafana:
+    image: localhub.etod.me/grafana/grafana
+    container_name: grafana
+    restart: always
+    networks:
+      - prom-proxy
+    ports:
+      - '3000' 
+    volumes:
+      - grafana-storage:/var/lib/grafana
+
+
+volumes:
+ grafana-storage:
+
+networks:
+  prom-proxy:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.12.13.0/24
