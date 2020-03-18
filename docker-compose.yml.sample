@@ -1,19 +1,6 @@
 version: "3"
 services:
 
-  prometheus:
-    image: prom/prometheus
-    container_name: prometheus-master
-    restart: always
-    networks:
-      - prom-proxy
-    ports:
-      - '9090'
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./data/:/promehteus/wal
-      - /etc/hosts:/etc/hosts:ro
-
   node_exporter:
     image: prom/node-exporter
     container_name: nodeexporter
@@ -46,36 +33,19 @@ services:
     container_name: proxy
     restart: always
     depends_on:
-      - prometheus
       - node_exporter
-      - grafana
       - prom_speedtest
     networks:
       - prom-proxy
     ports:
-      - '80:80'
+      - '8085:80'
     volumes:
       - ./proxy/config/conf.d:/etc/nginx/conf.d
       - ./proxy/logs:/var/log/nginx
-
-  grafana:
-    image: grafana/grafana
-    container_name: grafana
-    restart: always
-    networks:
-      - prom-proxy
-    ports:
-      - '3000' 
-    volumes:
-      - grafana-storage:/var/lib/grafana
-
-
-volumes:
- grafana-storage:
 
 networks:
   prom-proxy:
     driver: bridge
     ipam:
       config:
-        - subnet: 10.12.13.0/24
+        - subnet: 10.14.13.0/24
