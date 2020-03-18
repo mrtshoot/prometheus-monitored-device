@@ -55,6 +55,13 @@ proxy_set_header X-Real-IP $remote_addr;
 because of security you do not expose your prometheus exporter api you need access allowed addresses
 
 ## Step5
+open Web Port for Proxy
+
+```
+sudo firewall-cmd --add-port=8085/tcp --permanent && sudo firewall-cmd --reload
+```
+
+## Step6
 Up and Running Your Compose File
 
 ```
