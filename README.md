@@ -68,5 +68,15 @@ Up and Running Your Compose File
 cp docker-compose.yml.sample docker-compose.yml;docker-compose up -d
 ```
 
+# Nginx Monitoring
+
+## How to Monitoring Nginx Request and Connection on Specific Time Range?
+
+Only execute following command to run Nginx Exporter
+
+```
+docker run -p 9113:9113 nginx/nginx-prometheus-exporter -nginx.scrape.uri=https://mynginxdomain.com/nginx_status -nginx.retries=10 -web.telemetry-path=/nginx_prom
+```
+
 ### Author
 ### Mrtshoot
