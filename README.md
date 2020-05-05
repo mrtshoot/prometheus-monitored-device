@@ -7,7 +7,7 @@ we need some basic docker image to provide prometheus server scraper.to do this 
 clone this repo with following command
 
 ```
-git clone https://github.com/mrtshoot/prometheus-monitored-device.git
+git clone https://github.com/mrtshoot/prometheus-monitored-device.git;cd prometheus-monitored-device
 ```
 
 ## Step2
