@@ -13,7 +13,7 @@ git clone https://github.com/mrtshoot/prometheus-monitored-device.git;cd prometh
 ## Step2
 Create needed directories and files
 ```
-cd prometheus-monitored-device;mkdir -p proxy/config/conf.d
+mkdir -p proxy/config/conf.d
 ```
 and then needed files
 ```
