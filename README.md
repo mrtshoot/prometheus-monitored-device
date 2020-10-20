@@ -68,6 +68,56 @@ Up and Running Your Compose File
 cp docker-compose.yml.sample docker-compose.yml;docker-compose up -d
 ```
 
+# Real Host Monitoring
+to real host os monitoring you should install node exporter on your real host os.
+
+## Step1
+Download last release node_exporter base on your os architecture
+```
+wget https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-amd64.tar.gz
+```
+
+## Step2
+Extract file and rename it
+```
+tar -xzvf node_exporter-1.0.1.linux-amd64.tar.gz;mv node_exporter-1.0.1.linux-amd64.tar.gz node_exporter
+```
+
+# Step3
+move node_exporter to your binary linux location and set right execute permission.
+```
+mv node_exporter /usr/local/bin/node_exporter;chmod -R +x /usr/local/bin/node_exporter
+```
+
+# Step4
+Create node exporter service daemon under /etc/systemd/system directory.
+```
+vim /etc/systemd/system/node_exporter.service
+```
+
+Copy following content on node_exporter.service
+```
+[Unit]
+Description=Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/usr/local/bin/node_exporter/node_exporter
+
+[Install]
+WantedBy=default.target
+```
+## Step5
+Reload Daemon Service and Enable and Start node_exporter service
+```
+sudo systemctl daemon-reload;sudo systemctl enable node_exporter.service;sudo systemctl start node_exporter.service;sudo systemctl status node_exporter.service -l
+```
+
+## Step6
+Finaly you need add your host on prometheus yaml file on prometheus server.
+
+
 # Nginx Monitoring
 
 ## How to Monitoring Nginx Request and Connection on Specific Time Range?
